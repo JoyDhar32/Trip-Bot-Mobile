@@ -1,20 +1,45 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from '@expo/vector-icons';
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../configs/FirebaseConfig";
 
 export default function index() {
   const navigation = useNavigation(); // Get the navigation object from the hook
   const router = useRouter();
+  const [fullName, setFullName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   {
     /*Hide the header and set the title*/
   }
   useEffect(() => {
     navigation.setOptions({ title: "Sign Up", headerShown: false });
   }, []);
+const onCreateAccount=()=>{
+  if(fullName==="" || email==="" || password===""){
+   ToastAndroid.show("Please fill all the fields", ToastAndroid.LONG)
+    return
+  }
+  createUserWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed up 
+    const user = userCredential.user;
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode, errorMessage)
+    // ..
+  });
+}
+
   return (
     <View
       style={{
@@ -59,6 +84,7 @@ export default function index() {
             marginTop: 10,
           }}
           placeholder="Enter Full Name"
+          onChangeText={(value)=>setFullName(value)} // Set the value of the full name
         />
         <Text
           style={{
@@ -78,6 +104,7 @@ export default function index() {
             marginTop: 10,
           }}
           placeholder="Enter Email"
+          onChangeText={(value)=>setEmail(value)} // Set the value of the email
         />
         <Text
           style={{
@@ -98,10 +125,11 @@ export default function index() {
             marginTop: 10,
           }}
           placeholder="Enter Password"
+          onChangeText={(value)=>setPassword(value)} // Set the value of the password
         />
 
         {/*SignIn Button*/}
-        <View
+        <TouchableOpacity onPress={onCreateAccount}
           style={{
             padding: 15,
             backgroundColor: Colors.black,
@@ -119,7 +147,7 @@ export default function index() {
           >
            <Ionicons name="create" size={24} color="white" />Create Account
           </Text>
-        </View>
+        </TouchableOpacity>
 
         {/*SignUp Button*/}
         <TouchableOpacity

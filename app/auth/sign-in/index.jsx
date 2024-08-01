@@ -1,14 +1,18 @@
-import { View, Text, TextInput, TouchableOpacity } from "react-native";
-import React, { useEffect } from "react";
+import { View, Text, TextInput, TouchableOpacity, ToastAndroid } from "react-native";
+import React, { useEffect, useState } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
-import { MaterialIcons } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "../../configs/FirebaseConfig";
 
 export default function index() {
   const navigation = useNavigation(); // Get the navigation object from the hook
   const router = useRouter();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   {
     /*Hide the header and set the title*/
@@ -17,6 +21,35 @@ export default function index() {
     navigation.setOptions({ title: "Sign In", headerShown: false });
   }, []);
 
+  // SignIn Function
+  const onSignIn = () => {
+    if (email === "" || password === "") {
+      ToastAndroid.show("Please fill all the fields", ToastAndroid.LONG);
+      return;
+    }
+  
+    console.log(`Attempting sign-in with ${email}`);
+  
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        const user = userCredential.user;
+        console.log('User signed in:', user);
+        // Navigate to another screen or update UI
+        router.replace("home");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        if(errorCode === 'auth/user-not-found') {   
+        console.error('Sign-in error code:', errorCode);
+        console.error('Sign-in error message:', errorMessage);
+        ToastAndroid.show(`Sign-in error: ${errorMessage}`, ToastAndroid.LONG);
+        }
+        if(errorCode === 'auth/invalid-credential') {
+        ToastAndroid.show("Invalid Credentials",ToastAndroid.LONG)
+        }
+      });
+  };
   return (
     <View
       style={{
@@ -27,10 +60,9 @@ export default function index() {
       }}
     >
       <TouchableOpacity onPress={() => router.back()}>
-       
         <Ionicons name="arrow-back" size={24} color="black" />
       </TouchableOpacity>
-      <Text style={{ fontFamily: "roboto-bold", fontSize: 30 , marginTop: 20 }}>
+      <Text style={{ fontFamily: "roboto-bold", fontSize: 30, marginTop: 20 }}>
         Let's SignIn
       </Text>
       <Text
@@ -72,6 +104,7 @@ export default function index() {
             marginTop: 10,
           }}
           placeholder="Enter Email"
+          onChangeText={(value) => setEmail(value)} // Set the value of the email
         />
         <Text
           style={{
@@ -92,10 +125,11 @@ export default function index() {
             marginTop: 10,
           }}
           placeholder="Enter Password"
+          onChangeText={(value) => setPassword(value)} // Set the value of the password
         />
 
         {/*SignIn Button*/}
-        <View
+        <TouchableOpacity onPress={onSignIn}
           style={{
             padding: 15,
             backgroundColor: Colors.black,
@@ -113,7 +147,7 @@ export default function index() {
           >
             <AntDesign name="login" size={24} color="white" /> Sign In
           </Text>
-        </View>
+        </TouchableOpacity>
 
         {/*SignUp Button*/}
         <TouchableOpacity
@@ -133,7 +167,7 @@ export default function index() {
               textAlign: "center",
             }}
           >
-             <Ionicons name="create" size={24} color="black" /> Create Account
+            <Ionicons name="create" size={24} color="black" /> Create Account
           </Text>
         </TouchableOpacity>
         {/*Forgot Password*/}

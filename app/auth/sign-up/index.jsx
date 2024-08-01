@@ -1,10 +1,16 @@
-import { View, Text, TextInput, TouchableOpacity, ToastAndroid } from "react-native";
+import {
+  View,
+  Text,
+  TextInput,
+  TouchableOpacity,
+  ToastAndroid,
+} from "react-native";
 import React, { useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Colors } from "@/constants/Colors";
 import { useRouter } from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from '@expo/vector-icons';
+import { AntDesign } from "@expo/vector-icons";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "../../configs/FirebaseConfig";
 
@@ -20,25 +26,25 @@ export default function index() {
   useEffect(() => {
     navigation.setOptions({ title: "Sign Up", headerShown: false });
   }, []);
-const onCreateAccount=()=>{
-  if(fullName==="" || email==="" || password===""){
-   ToastAndroid.show("Please fill all the fields", ToastAndroid.LONG)
-    return
-  }
-  createUserWithEmailAndPassword(auth, email, password)
-  .then((userCredential) => {
-    // Signed up 
-    const user = userCredential.user;
-    console.log(user)
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-    console.log(errorCode, errorMessage)
-    // ..
-  });
-}
+  const onCreateAccount = () => {
+    if (fullName === "" || email === "" || password === "") {
+      ToastAndroid.show("Please fill all the fields", ToastAndroid.LONG);
+      return;
+    }
+    createUserWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        // Signed up
+        const user = userCredential.user;
+        console.log(user);
+        // ...
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(errorCode, errorMessage);
+        // ..
+      });
+  };
 
   return (
     <View
@@ -84,7 +90,7 @@ const onCreateAccount=()=>{
             marginTop: 10,
           }}
           placeholder="Enter Full Name"
-          onChangeText={(value)=>setFullName(value)} // Set the value of the full name
+          onChangeText={(value) => setFullName(value)} // Set the value of the full name
         />
         <Text
           style={{
@@ -104,7 +110,7 @@ const onCreateAccount=()=>{
             marginTop: 10,
           }}
           placeholder="Enter Email"
-          onChangeText={(value)=>setEmail(value)} // Set the value of the email
+          onChangeText={(value) => setEmail(value)} // Set the value of the email
         />
         <Text
           style={{
@@ -125,11 +131,12 @@ const onCreateAccount=()=>{
             marginTop: 10,
           }}
           placeholder="Enter Password"
-          onChangeText={(value)=>setPassword(value)} // Set the value of the password
+          onChangeText={(value) => setPassword(value)} // Set the value of the password
         />
 
         {/*SignIn Button*/}
-        <TouchableOpacity onPress={onCreateAccount}
+        <TouchableOpacity
+          onPress={onCreateAccount}
           style={{
             padding: 15,
             backgroundColor: Colors.black,
@@ -145,7 +152,8 @@ const onCreateAccount=()=>{
               textAlign: "center",
             }}
           >
-           <Ionicons name="create" size={24} color="white" />Create Account
+            <Ionicons name="create" size={24} color="white" />
+            Create Account
           </Text>
         </TouchableOpacity>
 
@@ -167,7 +175,8 @@ const onCreateAccount=()=>{
               textAlign: "center",
             }}
           >
-             <AntDesign name="login" size={24} color="black" marginTop={20} /> SignIn
+            <AntDesign name="login" size={24} color="black" marginTop={20} />{" "}
+            SignIn
           </Text>
         </TouchableOpacity>
       </View>

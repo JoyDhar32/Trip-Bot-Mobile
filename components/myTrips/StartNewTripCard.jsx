@@ -1,7 +1,9 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React from "react";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
+import { useRouter } from "expo-router";
 export default function StartNewTripCard() {
+  const router = useRouter();
   return (
     <View
       style={{
@@ -31,7 +33,7 @@ export default function StartNewTripCard() {
         Looks like its time to plan a new trip 🚗
       </Text>
       <TouchableOpacity
-        
+        onPress={()=>router.push('/create-trip/searchPlace')}
       >
         <Text
           style={{

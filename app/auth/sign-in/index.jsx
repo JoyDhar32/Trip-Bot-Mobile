@@ -35,7 +35,7 @@ export default function index() {
         const user = userCredential.user;
         console.log('User signed in:', user);
         // Navigate to another screen or update UI
-        router.replace("home");
+        router.replace("/mytrip");
       })
       .catch((error) => {
         const errorCode = error.code;

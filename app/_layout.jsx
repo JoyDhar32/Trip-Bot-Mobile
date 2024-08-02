@@ -1,8 +1,12 @@
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { View, Text, ActivityIndicator } from 'react-native';
+import { CreateTripContext } from "../context/CreateTripContext";
+import { useState } from "react";
 
 export default function RootLayout() {
+const [tripData, setTripData] = useState([]);
+
   const [fontsLoaded] = useFonts({
     'roboto': require('./../assets/fonts/Roboto-Regular.ttf'),
     'roboto-medium': require('./../assets/fonts/Roboto-Medium.ttf'),
@@ -22,15 +26,16 @@ export default function RootLayout() {
       </View>
     );
   }
-
   return (
     // <Stack screenOptions={{headerShown:false}}>
     //   <Stack.Screen name="index"  options={{headerShown:false}}/>
     // </Stack>
+    <CreateTripContext.Provider value={{tripData, setTripData}}>
 
     <Stack screenOptions={{headerShown:false}}>
       {/* <Stack.Screen name="index" options={{ headerShown: false }} /> */}
       <Stack.Screen name="(tabs)" />
     </Stack>
+    </CreateTripContext.Provider>
   );
 }

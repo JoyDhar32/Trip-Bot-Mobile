@@ -23,6 +23,7 @@ export default function SelectDates() {
   return (
     <View className="p-5 pt-2 bg-white h-full">
         <Text className="font-[roboto-bold] text-3xl mt-2 ">Select Dates</Text>
+        
     </View>
   );
 }

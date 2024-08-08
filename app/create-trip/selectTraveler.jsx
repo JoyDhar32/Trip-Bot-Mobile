@@ -1,14 +1,15 @@
-import { View, Text, FlatList, TouchableOpacity } from "react-native";
+import { View, Text, FlatList, TouchableOpacity, ToastAndroid } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { Link, useNavigation } from "expo-router";
+import { Link, router, useNavigation, useRouter } from "expo-router";
 import { SelectTravelerList } from "../../constants/Options";
 import OptionCard from "../../components/CreateTrip/OptionCard";
 import { CreateTripContext } from "../../context/CreateTripContext";
 
 export default function selectTraveler() {
   const navigation = useNavigation();
-  const [selectedTraveler, setSelectedTraveler] = useState();
+  const [selectedOption, setSelectedOption] = useState();
   const { tripData, setTripData } = useContext(CreateTripContext);
+  const router = useRouter();
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -26,9 +27,15 @@ export default function selectTraveler() {
 
   //  used to update the selected traveler in the tripData context
   useEffect(() => {
-    setTripData({ ...tripData, traveler: selectedTraveler });
-  }, [selectedTraveler]);
-
+    setTripData({ ...tripData, traveler: selectedOption });
+  }, [selectedOption]);
+const continueForTraveler=()=>{
+    if(!selectedOption){
+        ToastAndroid.show("Please Select Travel", ToastAndroid.LONG);
+        return;
+    }
+    router.push("/create-trip/selectDates");
+  }
   return (
     <View
       style={{
@@ -51,30 +58,31 @@ export default function selectTraveler() {
           marginTop: 12,
         }}
       >
-        <Text className="text-lg font-robotoSlab text-gray-500 mb-4">
+        <Text className="text-lg font-[robotoSlab] text-gray-500 mb-4">
           Select travelers for your trip
         </Text>
         <FlatList
           data={SelectTravelerList}
           renderItem={({ item, index }) => (
             <TouchableOpacity
-              onPress={() => setSelectedTraveler(item)}
+              onPress={() => setSelectedOption(item)}
               style={{
                 marginVertical: 8,
               }}
             >
-              <OptionCard option={item} selectedTraveler={selectedTraveler} />
+              <OptionCard option={item} selectedOption={selectedOption} />
             </TouchableOpacity>
           )}
         />
       </View>
-      <TouchableOpacity className="p-4 bg-black rounded-xl mt-4">
-      <Link href={"/create-trip/selectDates"} className="text-center">
-
+      <TouchableOpacity className="p-4 bg-black rounded-xl mt-4"
+      onPress={continueForTraveler}
+      >
+   
         <Text className="text-center text-white text-xl font-[robotoSlab-bold]">
           Continue
         </Text>
-      </Link>
+   
 
       </TouchableOpacity>
     </View>

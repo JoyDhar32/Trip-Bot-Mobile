@@ -4,6 +4,7 @@ import { Link, useNavigation, useRouter } from "expo-router";
 import CalendarPicker from "react-native-calendar-picker";
 import moment from "moment";
 import { CreateTripContext } from "../../context/CreateTripContext";
+import { Colors } from "../../constants/Colors";
 
 export default function SelectDates() {
   const navigation = useNavigation();
@@ -16,7 +17,7 @@ export default function SelectDates() {
       headerShown: true,
       title: "Select Dates",
       headerStyle: {
-        backgroundColor: "#F5C70F",
+        backgroundColor: Colors.navBg,
       },
       headerTintColor: "#fff",
       headerTitleStyle: {

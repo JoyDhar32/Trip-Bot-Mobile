@@ -4,6 +4,7 @@ import { Link, router, useNavigation, useRouter } from "expo-router";
 import { SelectTravelerList } from "../../constants/Options";
 import OptionCard from "../../components/CreateTrip/OptionCard";
 import { CreateTripContext } from "../../context/CreateTripContext";
+import { Colors } from "../../constants/Colors";
 
 export default function selectTraveler() {
   const navigation = useNavigation();
@@ -15,7 +16,7 @@ export default function selectTraveler() {
       headerShown: true,
       title: "Search Place",
       headerStyle: {
-        backgroundColor: "#f4511e",
+        backgroundColor: Colors.navBg,
       },
       headerTintColor: "#fff",
       headerTitleStyle: {

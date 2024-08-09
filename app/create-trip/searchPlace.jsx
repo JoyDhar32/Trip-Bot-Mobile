@@ -3,6 +3,7 @@ import React, { useContext, useEffect } from "react";
 import { useNavigation, useRouter } from "expo-router";
 import { GooglePlacesAutocomplete } from "react-native-google-places-autocomplete";
 import { CreateTripContext } from "../../context/CreateTripContext";
+import { Colors } from "../../constants/Colors";
 
 export default function searchPlace() {
   const navigation = useNavigation();
@@ -14,7 +15,7 @@ export default function searchPlace() {
       headerShown: true,
       title: "Search Place",
       headerStyle: {
-        backgroundColor: "#f4511e",
+        backgroundColor: Colors.navBg,
       },
       headerTintColor: "#fff",
       headerTitleStyle: {

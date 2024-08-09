@@ -12,6 +12,7 @@ export const Colors = {
   black:'#000',
   gray: '#808080',
   lightGray: '#D3D3D3', 
+  navBg:"#F5C70F",
   light: {
     text: '#11181C',
     background: '#fff',

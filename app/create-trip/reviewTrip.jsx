@@ -1,5 +1,5 @@
 import { View, Text, TouchableOpacity } from "react-native";
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useNavigation } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
@@ -9,6 +9,7 @@ import moment from "moment";
 
 export default function reviewTrip() {
   const navigation = useNavigation();
+  const [formattedDateRange, setFormattedDateRange] = useState('');
   const { tripData, setTripData } = useContext(CreateTripContext);
   useEffect(() => {
     navigation.setOptions({
@@ -24,8 +25,20 @@ export default function reviewTrip() {
       },
     });
   }, [navigation]);
+
+  useEffect(() => {
+    if (tripData) {
+      if (tripData.totalNoOfDays === 1) {
+        setFormattedDateRange(moment(tripData.startDate).format('DD MMM'));
+      } else if (tripData.totalNoOfDays > 1) {
+        setFormattedDateRange(
+          `${moment(tripData.startDate).format('DD MMM')} - ${moment(tripData.endDate).format('DD MMM')} (${tripData.totalNoOfDays} days)`
+        );
+      }
+    }
+  }, [tripData]);
   return (
-    <View className="p-5 pt-2 bg-white h-full">
+    <View className="p-5 pt-2 bg-white h-full mr-1">
       <Text className="font-[roboto-bold] text-3xl mt-2 text-center border border-dashed border-transparent border-b-[#2A2E75] text-[#2A2E75]">
         Review Trip
       </Text>
@@ -51,9 +64,13 @@ export default function reviewTrip() {
           <View>
             <Text className="font-[roboto-medium] text-lg">Trip Date</Text>
             <Text className="font-[robotoSlab-bold] text-gray-900 text-xl">
-              {moment(tripData?.startDate).format("DD MMM")} -{" "}
-              {moment(tripData?.endDate).format("DD MMM")} (
-              {tripData?.totalNoOfDays} days)
+             
+             
+            {formattedDateRange}
+
+
+
+              
             </Text>
           </View>
         </View>

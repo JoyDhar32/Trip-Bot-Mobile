@@ -8,8 +8,8 @@ import { Colors } from "../../constants/Colors";
 
 export default function SelectDates() {
   const navigation = useNavigation();
-  const [startDate, setStartDate] = useState();
-  const [endDate, setEndDate] = useState();
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
   const {tripData, setTripData} = useContext(CreateTripContext);
   const router = useRouter();
   useEffect(() => {
@@ -29,13 +29,14 @@ export default function SelectDates() {
 
   // Set the start and end date for the trip 
   const onDateChange = (date, type) => {
-    console.log(date, type);
+   
     if (type === "START_DATE") {
       setStartDate(moment(date));
     }
     else{
       setEndDate(moment(date));
     }
+    
   };
 // Calculate the duration of the trip and navigate to the next screen
   const OnDateSelectionContinue = () => {
@@ -43,8 +44,10 @@ export default function SelectDates() {
     ToastAndroid.show("Please select the dates", ToastAndroid.SHORT);
     return;
     }
-    const totalNoOfDays = endDate.diff(startDate, "days");
-    setTripData({...tripData, startDate: startDate, endDate:endDate, totalNoOfDays: totalNoOfDays+1});
+    const effectiveEndDate = endDate || startDate;
+    console.log(effectiveEndDate);
+    const totalNoOfDays = effectiveEndDate.diff(startDate, "days")+1;
+    setTripData({...tripData, startDate: startDate, endDate:endDate, totalNoOfDays: totalNoOfDays});
 
     router.push("/create-trip/selectBudget");
     

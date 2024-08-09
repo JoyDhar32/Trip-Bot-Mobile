@@ -32,13 +32,13 @@ export default function reviewTrip() {
         setFormattedDateRange(moment(tripData.startDate).format('DD MMM'));
       } else if (tripData.totalNoOfDays > 1) {
         setFormattedDateRange(
-          `${moment(tripData.startDate).format('DD MMM')} - ${moment(tripData.endDate).format('DD MMM')} (${tripData.totalNoOfDays} days)`
+          `${moment(tripData.startDate).format('DD MMM')} - ${moment(tripData.endDate).format('DD MMM')} (${tripData.totalNoOfDays-1} days)`
         );
       }
     }
   }, [tripData]);
   return (
-    <View className="p-5 pt-2 bg-white h-full mr-1">
+    <View className="p-5 pt-2 bg-white h-full">
       <Text className="font-[roboto-bold] text-3xl mt-2 text-center border border-dashed border-transparent border-b-[#2A2E75] text-[#2A2E75]">
         Review Trip
       </Text>
@@ -52,7 +52,7 @@ export default function reviewTrip() {
           <Text className="text-4xl">🎫</Text>
           <View>
             <Text className="font-[roboto-medium] text-lg">Destination</Text>
-            <Text className="font-[robotoSlab-bold] text-gray-900 text-xl">
+            <Text className="font-[robotoSlab-bold] text-gray-900 text-xl mr-2">
               {tripData?.locationInfo?.name}
             </Text>
           </View>

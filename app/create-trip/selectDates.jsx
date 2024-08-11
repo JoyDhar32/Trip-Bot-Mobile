@@ -45,7 +45,7 @@ export default function SelectDates() {
     return;
     }
     const effectiveEndDate = endDate || startDate;
-    console.log(effectiveEndDate);
+    // console.log(effectiveEndDate);
     const totalNoOfDays = effectiveEndDate.diff(startDate, "days")+1;
     setTripData({...tripData, startDate: startDate, endDate:endDate, totalNoOfDays: totalNoOfDays});
 

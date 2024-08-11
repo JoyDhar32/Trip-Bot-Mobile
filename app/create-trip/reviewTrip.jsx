@@ -1,6 +1,6 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation } from "expo-router";
+import { useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";
 import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
@@ -9,8 +9,9 @@ import moment from "moment";
 
 export default function reviewTrip() {
   const navigation = useNavigation();
-  const [formattedDateRange, setFormattedDateRange] = useState('');
+  const [formattedDateRange, setFormattedDateRange] = useState("");
   const { tripData, setTripData } = useContext(CreateTripContext);
+  const router = useRouter();
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -29,10 +30,12 @@ export default function reviewTrip() {
   useEffect(() => {
     if (tripData) {
       if (tripData.totalNoOfDays === 1) {
-        setFormattedDateRange(moment(tripData.startDate).format('DD MMM'));
+        setFormattedDateRange(moment(tripData.startDate).format("DD MMM"));
       } else if (tripData.totalNoOfDays > 1) {
         setFormattedDateRange(
-          `${moment(tripData.startDate).format('DD MMM')} - ${moment(tripData.endDate).format('DD MMM')} (${tripData.totalNoOfDays-1} days)`
+          `${moment(tripData.startDate).format("DD MMM")} - ${moment(
+            tripData.endDate
+          ).format("DD MMM")} (${tripData.totalNoOfDays - 1} days)`
         );
       }
     }
@@ -52,25 +55,20 @@ export default function reviewTrip() {
           <Text className="text-4xl">🎫</Text>
           <View>
             <Text className="font-[roboto-medium] text-lg">Destination</Text>
-            <Text className="font-[robotoSlab-bold] text-gray-900 text-xl mr-2">
-              {tripData?.locationInfo?.name}
-            </Text>
           </View>
         </View>
-
+<View>
+        <Text className="font-[robotoSlab-bold] text-gray-900 text-xl mr-2">
+          {tripData?.locationInfo?.name}
+        </Text>
+        </View>
         {/* Display Destination Info */}
         <View className="flex flex-row gap-4 mt-4 ">
           <Text className="text-4xl">📅</Text>
           <View>
             <Text className="font-[roboto-medium] text-lg">Trip Date</Text>
             <Text className="font-[robotoSlab-bold] text-gray-900 text-xl">
-             
-             
-            {formattedDateRange}
-
-
-
-              
+              {formattedDateRange}
             </Text>
           </View>
         </View>
@@ -94,22 +92,23 @@ export default function reviewTrip() {
           <View>
             <Text className="font-[roboto-medium] text-lg">Budget</Text>
             <Text className="font-[robotoSlab-bold] text-gray-900 text-xl">
-                {tripData?.budget}
+              {tripData?.budget}
             </Text>
           </View>
         </View>
 
-{/* Continue */}
-<TouchableOpacity
-        className="p-4 bg-[#0b0d30] rounded-xl mt-8"
-        // onPress={continueForBudget}
-      >
-        <Text className="text-center text-white text-xl font-[robotoSlab-bold]">
-          Create Trip
-        </Text>
-      </TouchableOpacity>
-
-
+        {/* Continue */}
+        <TouchableOpacity
+          onPress={() =>
+            router.replace("/create-trip/generateTrip")
+          } /* This will navigate to the next screen and  */
+          className="p-4 bg-[#0b0d30] rounded-xl mt-8"
+          // onPress={continueForBudget}
+        >
+          <Text className="text-center text-white text-xl font-[robotoSlab-bold]">
+            Create Trip
+          </Text>
+        </TouchableOpacity>
       </View>
     </View>
   );

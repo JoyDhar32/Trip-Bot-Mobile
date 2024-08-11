@@ -4,15 +4,19 @@ import { CreateTripContext } from "../../context/CreateTripContext";
 import { AI_PROMPT } from "../../constants/Options";
 import { chatSession } from "../configs/AIModel";
 import { useRouter } from "expo-router";
+import { auth, db } from "../configs/FirebaseConfig";
+import { doc, setDoc } from "firebase/firestore";
+import { tr } from "date-fns/locale";
 
 export default function GenerateTrip() {
   const { tripData, setTripData } = useContext(CreateTripContext);
   const [loading, setLoading] = useState(false);
+  const user = auth.currentUser;
   const router = useRouter();
 
   useEffect(() => {
-    tripData && GenerateAITrip();
-  }, [tripData]);
+    GenerateAITrip();
+  }, []);
 
   const GenerateAITrip = async () => {
     setLoading(true);
@@ -24,12 +28,28 @@ export default function GenerateTrip() {
       .replace("{traveler}", tripData.traveler?.title)
       .replace("{budget}", tripData.budget)
       .replace("{totalDays}", tripData.totalNoOfDays);
-    console.log(FINAL_PROMPT);
+    // console.log(FINAL_PROMPT);
     const result = await chatSession.sendMessage(FINAL_PROMPT);
-    console.log(result.response.text());
+
+    const responseText =  await result.response.text();
+    console.log('Response Text:', responseText);
+
+    const tripResponse = JSON.parse(responseText);
+    // console.log(tripResponse);
+    // console.log(tripData);
+
+    const docId = Date.now().toString();
+    const saveData=await setDoc(doc(db, "UserTrips", docId), {
+      userEmail: user.email,
+      tripPlan: tripResponse,
+    //   tripData: JSON.stringify(tripData),
+    //   docId: docId,
+    });
     setLoading(false);
+
     router.push("(tabs)/mytrip");
-  };
+
+};
 
   return (
     <View className="p-5 pt-[80px] bg-white h-full ">

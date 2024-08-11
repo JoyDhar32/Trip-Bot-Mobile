@@ -47,7 +47,7 @@ export default function SelectDates() {
     const effectiveEndDate = endDate || startDate;
     // console.log(effectiveEndDate);
     const totalNoOfDays = effectiveEndDate.diff(startDate, "days")+1;
-    setTripData({...tripData, startDate: startDate, endDate:endDate, totalNoOfDays: totalNoOfDays});
+    setTripData({...tripData, startDate: startDate, endDate:endDate, totalNoOfDays: totalNoOfDays+1});
 
     router.push("/create-trip/selectBudget");
     

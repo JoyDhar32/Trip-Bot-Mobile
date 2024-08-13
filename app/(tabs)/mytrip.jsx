@@ -4,7 +4,9 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import StartNewTripCard from "../../components/myTrips/StartNewTripCard";
 import { useRouter } from "expo-router";
 export default function mytrip() {
-  const [userTrip, setUserTrip] = useState([]);
+  const [userTrip, setUserTrip] = useState([]
+    
+  );
   const router = useRouter();
 
   return (

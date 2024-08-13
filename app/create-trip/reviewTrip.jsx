@@ -1,16 +1,16 @@
 import { View, Text, TouchableOpacity } from "react-native";
 import React, { useContext, useEffect, useState } from "react";
-import { useNavigation, useRouter } from "expo-router";
+import { Link, useNavigation, useRouter } from "expo-router";
 import { Colors } from "../../constants/Colors";
-import FontAwesome6 from "@expo/vector-icons/FontAwesome6";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { CreateTripContext } from "../../context/CreateTripContext";
+import { GenerateContext } from "../../context/GenerateContext";
 import moment from "moment";
 
 export default function reviewTrip() {
   const navigation = useNavigation();
   const [formattedDateRange, setFormattedDateRange] = useState("");
   const { tripData, setTripData } = useContext(CreateTripContext);
+  const { generateFinalTrip, setGenerateFinalTrip } = useContext(GenerateContext);
   const router = useRouter();
   useEffect(() => {
     navigation.setOptions({
@@ -40,6 +40,13 @@ export default function reviewTrip() {
       }
     }
   }, [tripData]);
+
+  const handlePress = () => {
+    setGenerateFinalTrip(true);
+    router.push("/create-trip/generateTrip");
+  };
+
+
   return (
     <View className="p-5 pt-2 bg-white h-full">
       <Text className="font-[roboto-bold] text-3xl mt-2 text-center border border-dashed border-transparent border-b-[#2A2E75] text-[#2A2E75]">
@@ -98,10 +105,9 @@ export default function reviewTrip() {
         </View>
 
         {/* Continue */}
-        <TouchableOpacity
-          onPress={() =>
-            router.replace("/create-trip/generateTrip")
-          } /* This will navigate to the next screen and  */
+          <TouchableOpacity
+            onPress={handlePress}
+           /* This will navigate to the next screen and  */
           className="p-4 bg-[#0b0d30] rounded-xl mt-8"
           // onPress={continueForBudget}
         >

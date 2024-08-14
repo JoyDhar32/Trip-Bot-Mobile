@@ -7,6 +7,8 @@ import { collection, query, where, getDocs } from "firebase/firestore";
 import { auth, db } from "../configs/FirebaseConfig";
 import { set } from "date-fns";
 import UserTripList from "../../components/myTrips/UserTripList";
+import { ScrollView } from "react-native";
+import Colors from "../../constants/Colors";
 
 export default function mytrip() {
   const [userTrips, setUserTrips] = useState([]);
@@ -34,13 +36,16 @@ export default function mytrip() {
   const router = useRouter();
 
   return (
-    <View
-      style={{
-        padding: 25,
-        backgroundColor: "white",
-        height: "100%",
-        paddingTop: 50,
-      }}
+    <ScrollView
+    contentContainerStyle={{
+      padding: 25,
+      paddingTop: 50,
+      paddingBottom: 25, // Adjust as needed
+    }}
+    style={{
+      backgroundColor: "white",
+      flex: 1, // Ensure ScrollView takes up full available space
+    }}
     >
       <View
         style={{
@@ -50,7 +55,7 @@ export default function mytrip() {
           alignItems: "center",
         }}
       >
-        <Text style={{ fontFamily: "roboto-bold", fontSize: 35 }}>
+        <Text className="font-[roboto-bold] text-3xl text-[darkText]">
           My Trips
         </Text>
 
@@ -66,6 +71,6 @@ export default function mytrip() {
       ) : (
         <UserTripList userTrips={userTrips} />
       )}
-    </View>
+    </ScrollView>
   );
 }

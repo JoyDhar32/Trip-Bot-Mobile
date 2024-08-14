@@ -11,8 +11,10 @@ export const Colors = {
   white:'#fff',
   black:'#000',
   gray: '#808080',
+  darkText:'#00072D',
   lightGray: '#D3D3D3', 
   navBg:"#F5C70F",
+  buttonBG:'#0b0d30',
   light: {
     text: '#11181C',
     background: '#fff',

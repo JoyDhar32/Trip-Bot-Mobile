@@ -2,7 +2,7 @@ import { View, Text, Image } from "react-native";
 import React from "react";
 import moment from "moment";
 
-export default function UserTripCard({ Trip }) {
+export default function UserTripCard({ Trip, key }) {
   const tripData = JSON.parse(Trip?.tripData);
   const refLocationName=tripData?.locationInfo?.name;
   const location=refLocationName.length>30?refLocationName.substring(0,30)+"...":refLocationName;

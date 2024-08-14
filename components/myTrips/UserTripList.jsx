@@ -2,14 +2,17 @@ import moment from "moment";
 import React, { useEffect, useState } from "react";
 import { View, Text, Image, TouchableOpacity } from "react-native";
 import UserTripCard from "./UserTripCard";
+import { useRouter } from "expo-router";
 
 export default function UserTripList({ userTrips }) {
   const [latestTrip, setLatestTrip] = useState("");
-console.log(userTrips);
+  const latest = userTrips.length - 1;
+
+  // console.log(userTrips);
+  const router = useRouter();
   useEffect(() => {
     if (userTrips.length === 0) return; // Ensure there's at least one trip
 
-    const latest = userTrips.length - 1;
 
     try {
       // Parse JSON string
@@ -19,7 +22,6 @@ console.log(userTrips);
 
       setLatestTrip(tripData);
       //   console.log(latestTrip);
-
     } catch (error) {
       console.error("Error parsing tripData JSON:", error);
     }
@@ -28,16 +30,23 @@ console.log(userTrips);
   return (
     <View>
       <View>
-        {latestTrip?.locationInfo?.photoRef?
+        {latestTrip?.locationInfo?.photoRef ? (
           <Image
-          source={{uri:'https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference='+latestTrip?.locationInfo?.photoRef+'&key='+process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY}}
-          className="w-full h-[300px] object-cover mt-4 rounded-lg"
-        />
-        :   
-        <Image
-          source={require("../../assets/images/placeholder.jpg")}
-          className="w-full h-[300px] object-cover mt-4 rounded-lg"
-        /> }
+            source={{
+              uri:
+                "https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=" +
+                latestTrip?.locationInfo?.photoRef +
+                "&key=" +
+                process.env.EXPO_PUBLIC_GOOGLE_MAP_KEY,
+            }}
+            className="w-full h-[300px] object-cover mt-4 rounded-lg"
+          />
+        ) : (
+          <Image
+            source={require("../../assets/images/placeholder.jpg")}
+            className="w-full h-[300px] object-cover mt-4 rounded-lg"
+          />
+        )}
       </View>
       <View>
         <Text className="text-lg font-[roboto-bold] text-center my-2">
@@ -61,7 +70,11 @@ console.log(userTrips);
       </View>
       <TouchableOpacity
         className="p-4  bg-[#0b0d30] rounded-xl mt-4"
-        // onPress={}
+        onPress={()=> router.push({
+          pathname: '/trip-details', params:{
+            trip:JSON.stringify(userTrips[latest])
+          }
+        })}
       >
         <Text className="text-center text-white text-xl font-[robotoSlab-bold]">
           View Trip
@@ -69,8 +82,8 @@ console.log(userTrips);
       </TouchableOpacity>
 
       {userTrips.map((trip, index) => (
-        <View>
-       <UserTripCard Trip={trip} key={index}/>
+        <View key={index}>
+          <UserTripCard Trip={trip} />
         </View>
       ))}
     </View>

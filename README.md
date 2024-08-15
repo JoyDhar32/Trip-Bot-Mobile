@@ -2,6 +2,17 @@
 
 This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
 
+![mobile1](https://github.com/user-attachments/assets/1fbf20ef-6d39-4646-b9b9-e9a93fdffc4c)
+![mobile2](https://github.com/user-attachments/assets/d09b314e-95b4-48dc-8105-89310e98aff9)
+![mobile3](https://github.com/user-attachments/assets/7436bfa5-d855-4146-90c5-edcaac464c05)
+![mobile4](https://github.com/user-attachments/assets/e6be78f0-369d-4a4c-90e4-cbeecea83222)
+![mobile5](https://github.com/user-attachments/assets/47cf28ee-3707-4366-8f16-f5ae6608da53)
+
+
+
+
+
+
 ## Get started
 
 1. Install dependencies

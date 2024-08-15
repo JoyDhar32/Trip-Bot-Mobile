@@ -29,7 +29,7 @@ const {
     {
       role: "user",
       parts: [
-        {text: "Generate Travel Plan for Location : Sydney Opera House, Sydney NSW, Australia, for 2 Days for A couple with a Luxury budget with a Flight details including airline, flightNumber, departureAirport, arrivalAirport, approximatePrice, Booking URL, Hotels options list miminum 6 hotels with HotelName, HotelAddress, Price, Hotel Image URL, Geo Coordinates, rating, descriptions and Places to visit nearby with placeName, Place Detaiols, Place Image URL, Geo Coordinates, ticket Pricing, Time to Travel each of the location for 2 days with each day plan with best time to visit in JSON Format\n"},
+        {text: "Generate Travel Plan for Location : Sydney Opera House, Sydney NSW, Australia, for 2 Days for A couple with a Luxury budget with a Flight details including airline, flightNumber, departureAirport, arrivalAirport, approximatePrice, Booking URL, Hotels options list miminum 6 hotels with HotelName, HotelAddress, Price, Hotel Image URL, Geo Coordinates, rating, descriptions and Places to visit nearby with placeName, Place Detaiols, Place Public Image URL as JPG, Geo Coordinates, ticket Pricing, Time to Travel each of the location for 2 days with each day plan with best time to visit in JSON Format\n"},
       ],
     },
     {
